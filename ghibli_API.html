@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Studios Ghibli API</title>
+    <style media="screen">
+      * {
+        background-color:	#000;
+      }
+      p {
+        background-color: #8fb6ab;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 30px;
+        border: 3px solid #fff;
+      }
+      
+      h1 {
+        color: #8ca19e;
+        text-shadow: -1px 0 #fff, 0 1px #fff, 1px 0 #fff, 0 -1px #fff;
+        font-size: 50px;
+        text-align: center;
+      }
+      
+      .data {
+        background-color: #8ca19e;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 30px;
+        border: 3px solid #fff;
+      }
+      
+      #data {
+        background-color: #8ca19e;
+
+      }
+      
+      h3 {
+        background-color: #8ca19e;
+      }
+      
+    </style>
+    <script type="text/javascript">
+      function getInfo() {
+			request = new XMLHttpRequest();
+			console.log("1 - request object created");
+ 
+  		request.open("GET", "https://ghibliapi.herokuapp.com/locations", true);
+
+			console.log("2 - opened request file");
+ 
+			request.onreadystatechange = function() {
+				 
+				if (request.readyState == 4 && request.status == 200) {
+
+					console.log("5 - response received");
+          
+					result = request.responseText;
+					var locations = JSON.parse(result);
+          var datalist = "";
+          
+          locations.forEach(function(location) { 
+            datalist += location.name + ": " + location.climate + " " + location.terrain + "<br><br>";
+				  })    
+					
+				document.getElementById("data").innerHTML = datalist; 
+				
+				}
+				else if (request.readyState == 4 && request.status != 200) {
+					document.getElementById("data").innerHTML = "Something is wrong!";
+				}
+				else if (request.readyState == 3) {
+					document.getElementById("data").innerHTML = "Too soon! Try again";
+				}
+			}
+			request.send();
+			console.log("4 - Request sent");
+		}
+    </script>
+  </head>
+  <body onload="getInfo()">
+    <h1>Studios Ghibli Locations</h1>
+    <p>Description: This API allows users to access information on all Studio Ghibli projects. This includes their release dates, titles in english and japanese, descriptions, ratings, times, character info and so on. You can also access the information by category of films, people, location and species.<br><br>Source: https://ghibliapi.herokuapp.com/#section/Studio-Ghibli-API <br><br>Options: I filtered the data using locations, specifically displaying the terrain descriptions of all the Studio Ghibli film locations, which includes some places that don't actually exist. <br><br>Use: This API would be helpful for anyone who is looking to do research or interested on a specific aspect of Ghibli films. One can find a lot of detail on characters, scenes, even vehicles using this API. If you wanted to you can obtain a list of all the cats in Ghibli films with descriptions of age, color etc. This API may also be useful for people who make animations as the API gives you access to the art usage in films.
+    </p> 
+    <div class="data">
+      <h3>Film location terrains:</h3>
+      <div id="data">&nbsp;</div>
+    </div>
+  </body>
+</html>
