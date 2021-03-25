@@ -20,11 +20,10 @@
           
 					result = request.responseText;
 					var locations = JSON.parse(result);
-          var datalist = "";
+          				var datalist = "";
           
-          locations.forEach(function(location) { 
-            var des = location.terrain.join(",");                        
-  				  datalist += location.name + ": " + des + "<br>";
+         			 locations.forEach(function(location) {                        
+  				  datalist += location.name + ": " + location.climate + location.terrain + "<br>";
 				  })    
 					
 				document.getElementById("data").innerHTML ="Film location terrains: <br>" + datalist; 
